@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Data Driven Basics]">
+  <listeners>
+    <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+    <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+    <listener class-name="com.w2a.listenners.CustomListeners"/>
+  </listeners>
+  <test name="Bank Manager LoginTest(failed)">
+    <classes>
+      <class name="com.w2a.TestCases.BankManagerLoginTest">
+        <methods>
+          <include name="setUp"/>
+          <include name="LoginAsTestManager"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- com.w2a.TestCases.BankManagerLoginTest -->
+    </classes>
+  </test> <!-- Bank Manager LoginTest(failed) -->
+</suite> <!-- Failed suite [Data Driven Basics] -->
