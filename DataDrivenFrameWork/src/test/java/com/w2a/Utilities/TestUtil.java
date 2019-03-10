@@ -61,30 +61,31 @@ public class TestUtil extends TestBase{
 		return data;
 
 	}
-	  /* @DataProvider(name="dp")
-	   public Object[][] getData(Method m) {
-		   
-		String sheetName= m.getName();
-		int rows = excel.getRowCount(sheetName);
-		int cols = excel.getColumnCount(sheetName);
-
-		Object[][] data = new Object[rows - 1][cols];
-		
-
-		for (int rowNum = 2; rowNum <= rows; rowNum++) { // 2
-			
-			for (int colNum = 0; colNum < cols; colNum++) {
-
-				// data[0][0]
-				data[rowNum - 2][colNum] = excel.getCellData(sheetName, colNum, rowNum);
+	 
+		  public static boolean IsTestRunnable(String TestName ,ExcelReader excel) {
+			  
+			  String sheetName="test__suite";
+			int rows=excel.getRowCount(sheetName);
+			for(int rNum=2;rNum<=rows; rNum++) {
 				
-			}
-
-		}
-
-		return data;
-	}*/
-	
+				 String testcase=excel.getCellData(sheetName, "TCID", rNum);
+				 if(testcase.equalsIgnoreCase(TestName)) {
+					 String runmode= excel.getCellData(sheetName, "Runmode", rNum);
+					 if(runmode.equalsIgnoreCase("Y")) {
+						 return true;
+					 }else 
+						 
+						 return false; 
+				 }
+				  
+			  }
+			  
+			  
+			
+			  
+			return false;
+			  
+		  }
 	
 	
 

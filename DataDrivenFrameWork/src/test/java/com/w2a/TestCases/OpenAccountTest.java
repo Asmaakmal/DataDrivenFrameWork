@@ -6,6 +6,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -27,6 +28,10 @@ public class OpenAccountTest extends TestBase {
 	
 	@Test(dataProviderClass=TestUtil.class,dataProvider="dp")
 	public void openAccountTest(Hashtable<String,String >data) {
+		if(!TestUtil.IsTestRunnable("openAccountTest", excel)) {
+			throw new SkipException("Skipping the Test "+"openAccountTest".toUpperCase() +"as Run mode is No");
+			
+		}
 		
 		Click("Openaccoun_CSS");
 		select("customer_CSS",data.get("customer"));
