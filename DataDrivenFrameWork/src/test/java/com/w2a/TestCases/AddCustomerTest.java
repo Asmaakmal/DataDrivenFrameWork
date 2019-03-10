@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.internal.reflect.DataProviderMethodMatcher;
@@ -21,8 +22,12 @@ public class AddCustomerTest extends TestBase {
 	@Test(dataProviderClass=TestUtil.class,dataProvider="dp")
 	
 	public void addCustomerTest(Hashtable<String,String >data) {
-		Click("AddCustBtn");
 		
+		if(!data.get("Runmode").equalsIgnoreCase("Y")) {
+			throw new SkipException("Skipping the test case as run mode for data set is no");
+		}
+		
+		Click("AddCustBtn");
 		Type("firstname",data.get("firstname"));
 		Type("lastname",data.get("lastname"));
 		Type("postcode",data.get("postcode"));
