@@ -22,4 +22,11 @@
       <class name="com.w2a.TestCases.AddCustomerTest"/>
     </classes>
   </test>
+
+<test  name="Open Account Test">
+    <classes>
+     
+      <class name="com.w2a.TestCases.OpenAccountTest"/>
+    </classes>
+  </test>
 </suite> <!-- Suite -->

@@ -10,11 +10,15 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
@@ -23,6 +27,7 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import com.w2a.Utilities.ExcelReader;
 import com.w2a.Utilities.ExtentManager;
+import com.w2a.Utilities.TestUtil;
 
 
 
@@ -96,6 +101,26 @@ public class TestBase {
 			wait = new WebDriverWait(driver,5);
 			
 		}
+	
+	public void VerifyEquals(String actual,String expected) throws IOException {
+		try{
+			Assert.assertEquals(actual, expected);
+			
+		}catch(Throwable t){
+			TestUtil.captureScreenshot();
+			//ReportNG
+			Reporter.log("<br>" + "Verification FAILUER: "+t.getMessage() +"<br>");
+			Reporter.log("<br>");
+			Reporter.log("<a target=\"_blank\" href="+TestUtil.screenshotName+"><img src="+TestUtil.screenshotName+" height=200 width=200 ></img></a> ");
+			Reporter.log("<br>");
+			Reporter.log("<br>");
+			//Extent Report
+			test.log(LogStatus.FAIL, "Verification Failed with Expection "+t.getMessage());
+			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenshotName));
+		}
+		
+		
+	}
   public void Click(String locator)  {
 	   driver.findElement(By.cssSelector(oR.getProperty(locator))).click();
 	   test.log(LogStatus.INFO, "Clicking on :" + locator);
@@ -105,7 +130,16 @@ public class TestBase {
 	  driver.findElement(By.cssSelector(oR.getProperty(locator))).sendKeys(value);
 	  test.log(LogStatus.INFO, "typing in :" +locator+"enter value as :" +value);
   }
-  
+   public WebElement dropdown;
+  public void select(String locator,String value) {
+	  
+	  dropdown =driver.findElement(By.cssSelector(oR.getProperty(locator)));
+	  test.log(LogStatus.INFO, "Selecting from dropdown :" +locator+"enter value as :" +value);
+	  Select select=new Select(dropdown);
+	  select.selectByVisibleText(value);
+	  
+	  
+  }
   
   
 	public boolean isElementPresent(By by) {
